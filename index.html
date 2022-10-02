@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <img src="#">
+        <form onclick="return false">
+            <input type="text" placeholder="cat">
+            <button type="submit" id="newPic"> New Picture</button>
+        </form>
+    </div>
+  <script>
+    const img = document.querySelector('img');
+    const container = document.querySelector(".container");
+    const search = document.querySelector("input");
+    const button = document.querySelector('button')
+
+    function getImage(word){
+        fetch('https://api.giphy.com/v1/gifs/translate?api_key=GvyLOx7x05du1DoAkM750ZsBBE2cKk3q&s=' + word , {mode: 'cors'})
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(response) {
+            img.src = response.data.images.original.url;
+        })
+        .catch(e => {
+            console.log(e)
+            console.log("search an image!")
+        })
+    }
+    getImage("cat");
+
+    button.addEventListener("click", ()=>{
+        getImage(search.value)
+    })
+  </script>
+  <style>
+    body{
+        display: flex;
+        width: 100vw;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+    }
+    .container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+  </style>
+</body>
+</html>
